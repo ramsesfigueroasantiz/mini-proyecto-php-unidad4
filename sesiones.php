@@ -20,13 +20,7 @@ include 'includes/header.php';
 include 'includes/menu.php';
 ?>
 
-<!-- Cuadro obligatorio de sesión -->
-<div class="session-box">
-    <strong>Información de Sesión Activa:</strong><br>
-    Hora inicio sesión: <?= date("H:i:s", $_SESSION['hora_inicio']); ?><br>
-    Hora actual: <?= date("H:i:s", $hora_actual); ?><br>
-    Tiempo activo: <?= $minutos; ?> minutos <?= $segundos; ?> segundos
-</div>
+
 
 <h2>Módulo de Manejo de Sesiones en PHP</h2>
 <p>Las sesiones permiten almacenar información del usuario a través de múltiples páginas web utilizando un identificador único guardado en una cookie temporal. Los datos residen en la memoria del servidor.</p>

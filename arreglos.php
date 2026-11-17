@@ -16,13 +16,7 @@ include 'includes/header.php';
 include 'includes/menu.php';
 ?>
 
-<!-- Cuadro obligatorio de sesión -->
-<div class="session-box">
-    <strong>Información de Sesión Activa:</strong><br>
-    Hora inicio sesión: <?= date("H:i:s", $_SESSION['hora_inicio']); ?><br>
-    Hora actual: <?= date("H:i:s", $hora_actual); ?><br>
-    Tiempo activo: <?= $minutos; ?> minutos <?= $segundos; ?> segundos
-</div>
+
 
 <h2>Manipulación de Arreglos en PHP</h2>
 <p>Los arreglos (arrays) permiten almacenar múltiples valores en una sola variable. PHP soporta arreglos indexados numéricamente, arreglos asociativos (con claves de texto) y arreglos multidimensionales.</p>

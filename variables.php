@@ -19,12 +19,7 @@ include 'includes/menu.php';
 ?>
 
 <!-- Cuadro obligatorio de sesión -->
-<div class="session-box">
-    <strong>Información de Sesión Activa:</strong><br>
-    Hora inicio sesión: <?= date("H:i:s", $_SESSION['hora_inicio']); ?><br>
-    Hora actual: <?= date("H:i:s", $hora_actual); ?><br>
-    Tiempo activo: <?= $minutos; ?> minutos <?= $segundos; ?> segundos
-</div>
+
 
 <h2>Módulo de Variables y Tipos de Datos en PHP</h2>
 <p>En PHP, las variables se declaran anteponiendo el símbolo de dólar (<code>$</code>) seguido del nombre de la variable. No es necesario declarar explícitamente el tipo de dato, ya que PHP realiza una asignación dinámica.</p>

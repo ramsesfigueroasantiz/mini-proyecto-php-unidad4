@@ -1,3 +1,15 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['hora_inicio'])) {
+    $_SESSION['hora_inicio'] = time();
+}
+$hora_inicio_formateada = date("H:i:s", $_SESSION['hora_inicio']);
+$segundos_iniciales = time() - $_SESSION['hora_inicio'];
+$minutos_iniciales = floor($segundos_iniciales / 60);
+$segundos_restantes = $segundos_iniciales % 60;
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,46 +23,40 @@
         <h1>Programación Web - Unidad 4</h1>
         <p>Mini Proyecto 1: PHP Dinámico (Variables, Estructuras, Arreglos y Sesiones)</p>
 
-        <?php
-        // Control de sesión para el tiempo activo
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        if (!isset($_SESSION['hora_inicio'])) {
-            $_SESSION['hora_inicio'] = time();
-        }
-        $segundos_iniciales = time() - $_SESSION['hora_inicio'];
-        ?>
-
-        <!-- Caja visual del cronómetro -->
-        <div class="sesion-box" style="margin-top: 10px; font-size: 15px;">
-            <span>⏱️ Tiempo activo en sesión: <strong id="tiempo-activo"><?php echo $segundos_iniciales; ?></strong> segundos</span>
+        <!-- Caja de Sesión Activa Oscura y Moderna (Única en todo el sitio) -->
+        <div class="sesion-box" style="background: rgba(30, 41, 59, 0.95); padding: 15px; border-left: 4px solid #3b82f6; margin: 20px auto; max-width: 600px; font-family: monospace; border-radius: 6px; text-align: left; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.4);">
+            <strong style="color: #60a5fa;">Información de Sesión Activa:</strong><br>
+            Hora inicio sesión: <span style="color: #cbd5e1;"><?php echo $hora_inicio_formateada; ?></span><br>
+            Hora actual: <span id="hora-actual" style="color: #38bdf8; font-weight: bold;"><?php echo date("H:i:s"); ?></span><br>
+            Tiempo activo: <span id="tiempo-activo-texto" style="color: #34d399; font-weight: bold;"><?php echo $minutos_iniciales . " minutos " . $segundos_restantes . " segundos"; ?></span>
         </div>
     </header>
 
-    <!-- Script de JavaScript para que el reloj corra segundo a segundo -->
+    <!-- Script JavaScript global para actualizar el reloj segundo a segundo -->
     <script>
-        let segundosActivos = <?php echo $segundos_iniciales; ?>;
+        let segundosTotales = <?php echo $segundos_iniciales; ?>;
 
-        function actualizarReloj() {
-            segundosActivos++;
+        function actualizarRelojEnVivo() {
+            segundosTotales++;
             
-            let horas = Math.floor(segundosActivos / 3600);
-            let minutos = Math.floor((segundosActivos % 3600) / 60);
-            let segundos = segundosActivos % 60;
+            let minutos = Math.floor(segundosTotales / 60);
+            let segundos = segundosTotales % 60;
 
-            let formatoTiempo = "";
-            if (horas > 0) {
-                formatoTiempo += (horas < 10 ? "0" : "") + horas + ":";
+            let fechaActual = new Date();
+            let horasStr = String(fechaActual.getHours()).padStart(2, '0');
+            let minutosStr = String(fechaActual.getMinutes()).padStart(2, '0');
+            let segundosStr = String(fechaActual.getSeconds()).padStart(2, '0');
+
+            const elementoHoraActual = document.getElementById("hora-actual");
+            if (elementoHoraActual) {
+                elementoHoraActual.innerText = horasStr + ":" + minutosStr + ":" + segundosStr;
             }
-            formatoTiempo += (minutos < 10 ? "0" : "") + minutos + ":" + (segundos < 10 ? "0" : "") + segundos;
 
-            const elemento = document.getElementById("tiempo-activo");
-            if (elemento) {
-                elemento.innerText = formatoTiempo;
+            const elementoTiempoTexto = document.getElementById("tiempo-activo-texto");
+            if (elementoTiempoTexto) {
+                elementoTiempoTexto.innerText = minutos + " minutos " + segundos + " segundos";
             }
         }
 
-        // Se ejecuta automáticamente cada 1 segundo (1000 ms)
-        setInterval(actualizarReloj, 1000);
+        setInterval(actualizarRelojEnVivo, 1000);
     </script>
